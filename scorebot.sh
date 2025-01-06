@@ -148,7 +148,7 @@ check_text_exists "/etc/default/grub" "GRUB_DISABLE_RECOVERY="true"" "GRUB recov
 check_text_exists2 "/etc/grub.d/40_custom" "set check_signatures=enforce" "export check_signatures" "Grub check signatures enabled"
 
 
-echo "vulns scored $count"
+echo "vulns scored: $count/43"
 
 
 
