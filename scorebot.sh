@@ -125,7 +125,7 @@ check_packages() {
     local vuln_name="$2"
     
 
-    if [ dpkg --get-selections | grep -q "^$package[[:space:]]*install$" ]; then
+    if [ dpkg --get-selections | awk "$1" | grep -q "^$package[[:space:]]*install$" ]; then
         echo "Vulnerability fixed: '$vuln_name'"
     else
         echo "Unsolved Vuln"
