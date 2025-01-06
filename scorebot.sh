@@ -87,7 +87,7 @@ check_file_deleted2() {
     local file2="$2"
     local vuln_name="$3"
     
-    if [ ! -e "$file" && ! -e "$file2" ]; then
+    if ! -e "$file" && ! -e "$file2"; then
         echo "Vulnerability fixed: '$vuln_name'" 
     else
         echo "Unsolved Vuln"
