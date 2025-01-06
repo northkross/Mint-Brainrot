@@ -17,6 +17,7 @@ check_text_exists() {
     
     if grep -q "$text" "$file"; then
         echo "Vulnerability fixed: '$vuln_name'"
+        count=count+1
     else
         echo "Unsolved Vuln"
     fi
