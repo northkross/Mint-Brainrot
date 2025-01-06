@@ -17,7 +17,6 @@ check_text_exists() {
     
     if grep -q "$text" "$file"; then
         echo "Vulnerability fixed: '$vuln_name'"
-        count=count+1
     else
         echo "Unsolved Vuln"
     fi
@@ -30,7 +29,6 @@ check_text_exists2() {
     
     if grep -q "$text" "$file" && grep -q "$text2" "$file"; then
         echo "Vulnerability fixed: '$vuln_name'"
-        count=count+1
     else
         echo "Unsolved Vuln"
     fi
@@ -57,7 +55,6 @@ check_text_not_exists() {
     
     if ! grep -q "$text" "$file"; then
         echo "Vulnerability fixed: '$vuln_name'"
-        count=count+1
     else
         echo "Unsolved Vuln"
     fi
@@ -70,9 +67,8 @@ check_file_exists() {
     
     if [ -e "$file" ]; then
         echo "Vulnerability fixed: '$vuln_name'"
-        count +=1
     else
-        count=count+1
+        echo "Unsolved Vuln"
     fi
 }
 
@@ -82,14 +78,34 @@ check_file_deleted() {
     local vuln_name="$2"
     
     if [ ! -e "$file" ]; then
-        echo "Vulnerability fixed: '$vuln_name'"
-        count=count+1
-        
+        echo "Vulnerability fixed: '$vuln_name'" 
     else
         echo "Unsolved Vuln"
     fi
 }
-
+check_file_deleted2() {
+    local file="$1"
+    local file="$2"
+    local vuln_name="$3"
+    
+    if [ ! -e "$file" && ! -e "$file2" ]; then
+        echo "Vulnerability fixed: '$vuln_name'" 
+    else
+        echo "Unsolved Vuln"
+    fi
+}
+check_file_deleted3() {
+    local file="$1"
+    local file="$2"
+    local file="$3"
+    local vuln_name="$4"
+    
+    if [ ! -e "$file" && ! -e "$file2" && ! -e "$file3" ]; then
+        echo "Vulnerability fixed: '$vuln_name'" 
+    else
+        echo "Unsolved Vuln"
+    fi
+}
 check_file_permissions() {
     local file="$1"
     local expected_permissions="$2"
@@ -100,7 +116,6 @@ check_file_permissions() {
     
     if [ "$actual_permissions" == "$expected_permissions" ]; then
         echo "Vulnerability fixed: '$vuln_name'"
-        count=count+1
     else
         echo "Unsolved Vuln"
     fi
