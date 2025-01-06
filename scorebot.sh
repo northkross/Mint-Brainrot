@@ -7,6 +7,7 @@ echo "NOTE: Please allow up to 5 minutes for scorebot updates & injects."
 echo "Scorebot version: v1"
 echo "Injects: NO"
 
+count = 0
 # Function to check if text exists in a file
 check_text_exists() {
     local file="$1"
@@ -27,6 +28,21 @@ check_text_exists2() {
     
     if grep -q "$text" "$file" && grep -q "$text2" "$file"; then
         echo "Vulnerability fixed: '$vuln_name'"
+        count +=1
+    else
+        echo "Unsolved Vuln"
+    fi
+}
+check_text_exists3() {
+    local file="$1"
+    local text="$2"
+    local text2="$3"
+    local text3="$4"
+    local vuln_name="$5"
+    
+    if grep -q "$text" "$file" && grep -q "$text2" "$file" && grep -q "$text3" "$file"; then
+        echo "Vulnerability fixed: '$vuln_name'"
+        count +=1
     else
         echo "Unsolved Vuln"
     fi
@@ -39,6 +55,7 @@ check_text_not_exists() {
     
     if ! grep -q "$text" "$file"; then
         echo "Vulnerability fixed: '$vuln_name'"
+        count +=1
     else
         echo "Unsolved Vuln"
     fi
@@ -51,6 +68,7 @@ check_file_exists() {
     
     if [ -e "$file" ]; then
         echo "Vulnerability fixed: '$vuln_name'"
+        count +=1
     else
         echo "Unsolved Vuln"
     fi
@@ -63,6 +81,8 @@ check_file_deleted() {
     
     if [ ! -e "$file" ]; then
         echo "Vulnerability fixed: '$vuln_name'"
+        count +=1
+        
     else
         echo "Unsolved Vuln"
     fi
@@ -78,6 +98,7 @@ check_file_permissions() {
     
     if [ "$actual_permissions" == "$expected_permissions" ]; then
         echo "Vulnerability fixed: '$vuln_name'"
+        count +=1
     else
         echo "Unsolved Vuln"
     fi
@@ -99,8 +120,10 @@ check_file_deleted "/home/rizzler/Music/ThickofIt.mp3" "Prohibited mp3 file remo
 check_file_deleted "/home/rizzler/Pictures/chillguy.jpg" "Chill Guy image removed"
 check_file_deleted "/root/.nothing_here" "Malicious File Removed"
 check_file_deleted "/root/.secret" "Malicious File Removed"
+check_text_exists "/etc/profile" "ALIAS=" "Annoying alias script removed"
 check_text_exists "/etc/ufw/ufw.conf" "Enabled=yes" "Firewall running"
 check_text_not_exists "/etc/sudoers" "NOPASSWD" "Removed insecure sudoers rule"
+check_file_deleted "/etc/sudoers.d/balsamicvinegar" "unnecessary sudeors file removed"
 check_text_exists "/etc/ssh/sshd_config" "Port 22" "SSH runs on port 22"
 check_text_exists "/etc/ssh/sshd_config" "AddressFamily inet" "SSH connections only use the IPv4 address family"
 check_text_exists "/etc/ssh/sshd_config" "PermitRootLogin no" "SSH doesn't permit root login"
@@ -109,4 +132,31 @@ check_text_exists "/etc/vsftpd.conf" "anon_mkdir_write_enable=NO" "anonymous FTP
 check_text_exists "/etc/vsftpd.conf" "ssl_enable=YES" "FTP SSL enabled"
 check_text_exists "/etc/vsftpd.conf" "ssl_tlsv1=YES" "SSL uses secure TLS"
 check_text_exists2 "/etc/vsftpd.conf" "force_local_logins_ssl=YES" "force_local_data_ssl=YES" "FTP forces SSL"
-check_text_exists2 "/etc/vsftpd.conf" "pasv_min_port=50000" "pasv_min_port=50200" "FTP passive port range set"
+check_text_exists3 "/etc/vsftpd.conf" "pasv_min_port=50000" "pasv_min_port=50200" "pasv_enable=YES" "FTP passive port range set"
+check_text_not_exists "/etc/ftpusers" "chillguy" "Chill Guy is not an ftpuser"
+check_text_exists "/etc/squid/squid.conf" "http_port 3128" "squid http port set to 3128"
+check_text_exists "/etc/squid/squid.conf" "http_access allow localhost" "squid allows localhost"
+check_text_exists "/etc/squid/squid.conf" "http_access deny CONNECT !SSL_ports" "squid only allows connection from secure SSL ports"
+check_file_permissions "/etc/shadow" "600" "Permissions on shadow file fixed"
+check_text_exists "/etc/login.defs" "Max_Pass_Days = 90" "Max Pass Age set"
+check_text_exists "/etc/login.defs" "ENCRYPT_METHOD SHA512" "SHA512 encryption enabled"
+check_text_exists2 "/etc/apt/apt.conf.d/20auto-upgrades" "APT::Periodic::Update-Package-Lists "1";" "APT::Periodic::Unattended-Upgrade "1"" "System set to automatically update"
+check_text_exists "/root/.bashrc" "alias nano=" "malicious alias removed"
+check_text_exists "/etc/audit/auditd.conf" "write_logs = yes" "auditd writes logs"
+check_text_exists "/etc/audit/auditd.conf" "max_restarts = 10" "auditd has 10 max restarts"
+check_text_exists "/etc/default/grub" "GRUB_DISABLE_RECOVERY="true"" "GRUB recovery disabled"
+check_text_exists2 "/etc/grub.d/40_custom" "set check_signatures=enforce" "export check_signatures" "Grub check signatures enabled"
+
+
+echo "vulns scored $count"
+
+
+
+
+
+
+
+
+
+
+
