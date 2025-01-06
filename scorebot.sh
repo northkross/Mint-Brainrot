@@ -1,7 +1,6 @@
 #!/bin/bash
 # Please give around ~5 minutes for the raw to update
 # Scorebot for 2024 Mint Brainrot
-count=0
 echo " "
 echo " "
 echo "NOTE: Please allow up to 5 minutes for scorebot updates & injects."
@@ -121,6 +120,17 @@ check_file_permissions() {
     fi
 }
 
+check_packages() {
+    local package="$1"
+    local vuln_name="$2"
+
+    if [ grep -q "package" dpkg --get-selections | awk '{print $1}' ]; then
+        echo "Vulnerability fixed: '$vuln_name'"
+    else
+        echo "Unsolved Vuln"
+    fi
+}
+
 echo " "
 echo "Dallas Mint Brainrot"
 echo " "
@@ -158,6 +168,9 @@ check_file_permissions "/etc/shadow" "600" "Permissions on shadow file fixed"
 check_text_exists "/etc/login.defs" "Max_Pass_Days = 90" "Max Pass Age set"
 check_text_exists "/etc/login.defs" "ENCRYPT_METHOD SHA512" "SHA512 encryption enabled"
 check_text_exists2 "/etc/apt/apt.conf.d/20auto-upgrades" "APT::Periodic::Update-Package-Lists "1";" "APT::Periodic::Unattended-Upgrade "1"" "System set to automatically update"
+check_file_deleted2 "/etc/samba/" "/etc/apache2/" "Unauthorized services apache2 and samba removed"
+check_packages "wireshark" "Wireshark removed"
+
 check_text_not_exists "/root/.bashrc" "alias nano=" "malicious alias removed"
 check_text_exists "/etc/audit/auditd.conf" "write_logs = yes" "auditd writes logs"
 check_text_exists "/etc/audit/auditd.conf" "max_restarts = 10" "auditd has 10 max restarts"
@@ -165,7 +178,6 @@ check_text_exists "/etc/default/grub" "GRUB_DISABLE_RECOVERY="true"" "GRUB recov
 check_text_exists2 "/etc/grub.d/40_custom" "set check_signatures=enforce" "export check_signatures" "Grub check signatures enabled"
 
 
-echo "vulns scored: $count/43"
 
 
 
