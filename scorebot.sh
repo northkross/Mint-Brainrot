@@ -99,7 +99,7 @@ check_file_deleted3() {
     local file3="$3"
     local vuln_name="$4"
     
-    if [ ! -e "$file" && ! -e "$file2" && ! -e "$file3" ]; then
+    if ! -e "$file" && ! -e "$file2" && ! -e "$file3"; then
         echo "Vulnerability fixed: '$vuln_name'" 
     else
         echo "Unsolved Vuln"
@@ -125,13 +125,38 @@ check_packages() {
     local vuln_name="$2"
     
 
-    if dpkg --get-selections | grep -q "^$package[[:space:]]*install$"; then
+    if ! dpkg --get-selections | grep -q "^$package[[:space:]]*install$"; then
+        echo "Vulnerability fixed: '$vuln_name'"
+    else
+        echo "Unsolved Vuln"
+    fi
+}
+check_packages2() {
+    local package="$1"
+    local package2="$2"
+    local vuln_name="$3"
+    
+
+    if ! dpkg --get-selections | grep -q "^$package[[:space:]]*install$" && ! dpkg --get-selections | grep -q "^$package2[[:space:]]*install$"; then
         echo "Vulnerability fixed: '$vuln_name'"
     else
         echo "Unsolved Vuln"
     fi
 }
 
+check_packages3() {
+    local package="$1"
+    local package2="$2"
+    local package3="$3"
+    local vuln_name="$4"
+    
+
+    if ! dpkg --get-selections | grep -q "^$package[[:space:]]*install$" && ! dpkg --get-selections | grep -q "^$package2[[:space:]]*install$" && ! dpkg --get-selections | grep -q "^$package3[[:space:]]*install$"; then
+        echo "Vulnerability fixed: '$vuln_name'"
+    else
+        echo "Unsolved Vuln"
+    fi
+}
 echo " "
 echo "Dallas Mint Brainrot"
 echo " "
@@ -169,9 +194,11 @@ check_file_permissions "/etc/shadow" "600" "Permissions on shadow file fixed"
 check_text_exists "/etc/login.defs" "Max_Pass_Days = 90" "Max Pass Age set"
 check_text_exists "/etc/login.defs" "ENCRYPT_METHOD SHA512" "SHA512 encryption enabled"
 check_text_exists2 "/etc/apt/apt.conf.d/20auto-upgrades" "APT::Periodic::Update-Package-Lists "1";" "APT::Periodic::Unattended-Upgrade "1"" "System set to automatically update"
-check_file_deleted2 "/etc/samba/" "/etc/apache2/" "Unauthorized services apache2 and samba removed"
+check_packages "4g8" "4g8 removed"
 check_packages "wireshark" "Wireshark removed"
-
+check_packages2 "samba" "apache2" "Unauthorized services apache2 and samba removed"
+check_packages2 "ophcrack" "aircrack-ng" "Password cracking software removed"
+check_packages3 "qbittorrent" "transmission" "deluge" "Password cracking software removed"
 check_text_not_exists "/root/.bashrc" "alias nano=" "malicious alias removed"
 check_text_exists "/etc/audit/auditd.conf" "write_logs = yes" "auditd writes logs"
 check_text_exists "/etc/audit/auditd.conf" "max_restarts = 10" "auditd has 10 max restarts"
