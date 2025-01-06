@@ -84,7 +84,7 @@ check_file_deleted() {
 }
 check_file_deleted2() {
     local file="$1"
-    local file="$2"
+    local file2="$2"
     local vuln_name="$3"
     
     if [ ! -e "$file" && ! -e "$file2" ]; then
@@ -95,8 +95,8 @@ check_file_deleted2() {
 }
 check_file_deleted3() {
     local file="$1"
-    local file="$2"
-    local file="$3"
+    local file2="$2"
+    local file3="$3"
     local vuln_name="$4"
     
     if [ ! -e "$file" && ! -e "$file2" && ! -e "$file3" ]; then
@@ -123,8 +123,9 @@ check_file_permissions() {
 check_packages() {
     local package="$1"
     local vuln_name="$2"
+    
 
-    if [ grep -q "package" dpkg --get-selections | awk '{print $1}' ]; then
+    if [ grep -q "package" | dpkg --get-selections]; then
         echo "Vulnerability fixed: '$vuln_name'"
     else
         echo "Unsolved Vuln"
