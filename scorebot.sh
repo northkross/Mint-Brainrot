@@ -76,4 +76,4 @@ echo " "
 echo "Dallas Mint Brainrot Image"
 echo " "
 
-check_text_exists "/home/rizzler/Forensics1.txt" "Skibidi, Skibidi Hawk Tuah Hawk" "Forensics 1 correct"
+check_text_exists "/home/rizzler/Desktop/Forensics1.txt" "Skibidi, Skibidi Hawk Tuah Hawk" "Forensics 1 correct"
