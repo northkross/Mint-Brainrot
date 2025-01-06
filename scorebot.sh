@@ -122,7 +122,7 @@ check_file_deleted "/home/rizzler/Pictures/chillguy.jpg" "Chill Guy image remove
 check_file_deleted "/root/.nothing_here" "Malicious File Removed"
 check_file_deleted "/root/.secret" "Malicious File Removed"
 check_text_not_exists "/etc/profile" "ALIAS=" "Annoying alias script removed"
-check_text_exists "/etc/ufw/ufw.conf" "Enabled=yes" "Firewall running"
+check_text_exists "/etc/ufw/ufw.conf" "ENABLED=yes" "Firewall running"
 check_text_not_exists "/etc/sudoers" "NOPASSWD" "Removed insecure sudoers rule"
 check_file_deleted "/etc/sudoers.d/balsamicvinegar" "unnecessary sudeors file removed"
 check_text_exists "/etc/ssh/sshd_config" "Port 22" "SSH runs on port 22"
