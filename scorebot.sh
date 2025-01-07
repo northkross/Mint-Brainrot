@@ -162,7 +162,7 @@ echo "Dallas Mint Brainrot"
 echo " "
 
 check_text_exists "/home/rizzler/Forensics1.txt" "Skibidi, Skibidi Hawk Tuah Hawk" "Forensics 1 correct"
-check_text_exists "/home/rizzler/Forensics2.txt" "July 13" "Forensics 2 correct"
+check_text_exists "/home/rizzler/Forensics2.txt" "https://tophermitchell.hair" "Forensics 2 correct"
 check_text_exists "/home/rizzler/Forensics3.txt" "LowTaperFade" "Forensics 3 correct"
 check_text_not_exists "/etc/group" "chillguy:x:1003:" "User chillguy removed"
 check_text_not_exists "/etc/group" "koco:x:1006:" "User koco removed"
