@@ -192,7 +192,7 @@ check_text_exists "/etc/squid/squid.conf" "http_port 3128" "squid http port set 
 check_text_exists "/etc/squid/squid.conf" "http_access allow localhost" "squid allows localhost"
 check_text_exists "/etc/squid/squid.conf" "http_access deny CONNECT !SSL_ports" "squid only allows connection from secure SSL ports"
 check_file_permissions "/etc/shadow" "600" "Permissions on shadow file fixed"
-check_text_exists "/etc/login.defs" "Max_Pass_Days = 90" "Max Pass Age set"
+check_text_exists "/etc/login.defs" "Pass_Max_Days = 90" "Max Pass Age set"
 check_text_exists "/etc/login.defs" "ENCRYPT_METHOD SHA512" "SHA512 encryption enabled"
 check_text_exists2 "/etc/apt/apt.conf.d/20auto-upgrades" "APT::Periodic::Update-Package-Lists "1";" "APT::Periodic::Unattended-Upgrade "1"" "System set to automatically update"
 check_text_exists "/etc/sysctl.conf" "net.ipv4.conf.default.log_martians = 1" "Sysctl logs martians"
