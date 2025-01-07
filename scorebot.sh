@@ -204,7 +204,7 @@ check_packages3 "qbittorrent" "transmission" "deluge" "Password cracking softwar
 check_text_not_exists "/root/.bashrc" "alias nano=" "malicious alias removed"
 check_text_exists "/etc/audit/auditd.conf" "write_logs = yes" "auditd writes logs"
 check_text_exists "/etc/audit/auditd.conf" "max_restarts = 10" "auditd has 10 max restarts"
-check_text_exists "/etc/default/grub" "GRUB_DISABLE_RECOVERY="true"" "GRUB recovery disabled"
+check_text_exists "/etc/default/grub" 'GRUB_DISABLE_RECOVERY="true"' "GRUB recovery disabled"
 check_text_exists2 "/etc/grub.d/40_custom" "set check_signatures=enforce" "export check_signatures" "Grub check signatures enabled"
 
 
