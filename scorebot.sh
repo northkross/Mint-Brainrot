@@ -186,7 +186,7 @@ check_text_exists "/etc/vsftpd.conf" "anon_mkdir_write_enable=NO" "anonymous FTP
 check_text_exists "/etc/vsftpd.conf" "ssl_enable=YES" "FTP SSL enabled"
 check_text_exists "/etc/vsftpd.conf" "ssl_tlsv1=YES" "SSL uses secure TLS"
 check_text_exists2 "/etc/vsftpd.conf" "force_local_logins_ssl=YES" "force_local_data_ssl=YES" "FTP forces SSL"
-check_text_exists3 "/etc/vsftpd.conf" "pasv_min_port=50000" "pasv_min_port=50200" "pasv_enable=YES" "FTP passive port range set"
+check_text_exists3 "/etc/vsftpd.conf" "pasv_min_port=50000" "pasv_max_port=50200" "pasv_enable=YES" "FTP passive port range set"
 check_text_not_exists "/etc/ftpusers" "chillguy" "Chill Guy is not an ftpuser"
 check_text_exists "/etc/squid/squid.conf" "http_port 3128" "squid http port set to 3128"
 check_text_exists "/etc/squid/squid.conf" "http_access allow localhost" "squid allows localhost"
