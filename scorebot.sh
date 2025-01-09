@@ -8,6 +8,11 @@ echo "Scorebot version: v1"
 echo "Injects: NO"
 
 
+echo "Important Notice in Forensics 2 'Hint: July' should be 'Example: www.example.com'"
+
+
+
+
 # Function to check if text exists in a file
 check_text_exists() {
     local file="$1"
